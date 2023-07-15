@@ -9,10 +9,24 @@ import Foundation
 
 class Expenses: ObservableObject {
     @Published var items = [ExpenseItem]() {
-        didSet {            
-            if let encoded = try? JSONEncoder().encode(items) {
+        didSet {
+            let encoder = JSONEncoder()
+            
+            if let encoded = try? encoder.encode(items) {
                 UserDefaults.standard.set(encoded, forKey: "Items")
             }
+        }
+    }
+    
+    var personalItems: [ExpenseItem] {
+        get {
+            items.filter({ $0.type == "Personal" })
+        }
+    }
+    
+    var businessItems: [ExpenseItem] {
+        get {
+            items.filter({ $0.type == "Business" })
         }
     }
     
