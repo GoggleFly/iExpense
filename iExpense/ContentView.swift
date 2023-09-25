@@ -27,6 +27,9 @@ struct ExpenseDetailView: View {
             .font(amount < 10 ? .body : .body.bold())
             .foregroundColor(amount > 100 ? .red : .black)
         }
+        .accessibilityElement()
+        .accessibilityLabel("Expense item: \(name). Value \(amount.formatted(.currency(code: Locale.current.currency?.identifier ?? "USD"))).")
+        .accessibilityHint("\(type) expense.")
     }
 }
 
